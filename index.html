@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>张昱成 | 个人博客</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+
+		<!-- 配置Tailwind自定义主题 -->
+		<script>
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							cyber: {
+								purple: '#7E22CE', // 主紫色
+								blue: '#2563EB', // 霓虹蓝
+								pink: '#EC4899', // 霓虹粉
+								green: '#10B981', // 霓虹绿
+								dark: '#0F172A', // 深色背景
+								darker: '#020617', // 更深色背景
+								accent: '#F59E0B', // 强调色
+							},
+						},
+						fontFamily: {
+							cyber: ['Orbitron', 'sans-serif'],
+							mono: ['Space Mono', 'monospace'],
+						},
+						animation: {
+							'glow': 'glow 2s ease-in-out infinite alternate',
+							'float': 'float 3s ease-in-out infinite',
+							'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+							'typing': 'typing 3.5s steps(40, end), blink .75s step-end infinite',
+						},
+						keyframes: {
+							glow: {
+								'0%': {
+									textShadow: '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #7E22CE, 0 0 20px #7E22CE'
+								},
+								'100%': {
+									textShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #2563EB, 0 0 40px #2563EB'
+								},
+							},
+							float: {
+								'0%, 100%': {
+									transform: 'translateY(0)'
+								},
+								'50%': {
+									transform: 'translateY(-10px)'
+								},
+							},
+							typing: {
+								'from': {
+									width: '0'
+								},
+								'to': {
+									width: '100%'
+								},
+							},
+							blink: {
+								'from, to': {
+									borderColor: 'transparent'
+								},
+								'50%': {
+									borderColor: '#7E22CE'
+								},
+							},
+						},
+					},
+				}
+			}
+		</script>
+
+		<!-- 自定义工具类 -->
+		<style type="text/tailwindcss">
+			@layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-glow {
+        text-shadow: 0 0 10px currentColor;
+      }
+      .border-glow {
+        box-shadow: 0 0 5px currentColor, inset 0 0 5px currentColor;
+      }
+      .grid-auto-fit {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+      .bg-cyber-grid {
+        background-image: linear-gradient(rgba(126, 34, 206, 0.1) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(126, 34, 206, 0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      .clip-path-slant {
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      }
+    }
+  </style>
+
+		<!-- 引入字体 -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Space+Mono&display=swap"
+			rel="stylesheet">
+	</head>
+
+	<body class="bg-cyber-dark text-white font-mono overflow-x-hidden">
+		<!-- 导航栏 -->
+		<nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+			<div
+				class="container mx-auto px-4 py-3 flex justify-between items-center bg-cyber-darker/80 backdrop-blur-md border-b border-cyber-purple/30">
+				<a href="#hero" class="text-cyber-pink text-glow font-cyber font-bold text-xl tracking-wider">
+					张昱成
+				</a>
+
+				<!-- 桌面导航 -->
+				<div class="hidden md:flex space-x-8">
+					<a href="#about"
+						class="text-white hover:text-cyber-blue transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-cyber-blue after:transition-all after:duration-300">关于我</a>
+					<a href="#skills"
+						class="text-white hover:text-cyber-green transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-cyber-green after:transition-all after:duration-300">技能</a>
+					<a href="#education"
+						class="text-white hover:text-cyber-pink transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-cyber-pink after:transition-all after:duration-300">教育背景</a>
+					<a href="#projects"
+						class="text-white hover:text-cyber-accent transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-cyber-accent after:transition-all after:duration-300">项目经历</a>
+					<a href="#awards"
+						class="text-white hover:text-cyber-purple transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-cyber-purple after:transition-all after:duration-300">荣誉奖项</a>
+				</div>
+
+				<!-- 移动端菜单按钮 -->
+				<button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+					<i class="fa-solid fa-bars text-xl"></i>
+				</button>
+			</div>
+
+			<!-- 移动端导航菜单 -->
+			<div id="mobile-menu"
+				class="hidden md:hidden bg-cyber-darker/95 backdrop-blur-lg border-b border-cyber-purple/30">
+				<div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+					<a href="#about"
+						class="text-white hover:text-cyber-blue transition-colors duration-300 py-2">关于我</a>
+					<a href="#skills"
+						class="text-white hover:text-cyber-green transition-colors duration-300 py-2">技能</a>
+					<a href="#education"
+						class="text-white hover:text-cyber-pink transition-colors duration-300 py-2">教育背景</a>
+					<a href="#projects"
+						class="text-white hover:text-cyber-accent transition-colors duration-300 py-2">项目经历</a>
+					<a href="#awards"
+						class="text-white hover:text-cyber-purple transition-colors duration-300 py-2">荣誉奖项</a>
+				</div>
+			</div>
+		</nav>
+
+		<!-- 英雄区域 -->
+		<section id="hero"
+			class="min-h-screen flex items-center justify-center relative overflow-hidden bg-cyber-darker bg-cyber-grid">
+			<!-- 背景效果 -->
+			<div class="absolute inset-0 overflow-hidden">
+				<div
+					class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyber-purple/20 rounded-full filter blur-[100px] animate-pulse-slow">
+				</div>
+				<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyber-blue/20 rounded-full filter blur-[100px] animate-pulse-slow"
+					style="animation-delay: 2s;"></div>
+			</div>
+
+			<div class="container mx-auto px-4 py-20 relative z-10">
+				<div class="max-w-4xl mx-auto text-center">
+					<h1 class="text-[clamp(2.5rem,5vw,4rem)] font-cyber font-bold mb-6 tracking-wider">
+						<span class="text-white">张昱成</span>
+						<span class="text-cyber-pink text-glow animate-glow">|</span>
+						<span class="text-cyber-blue">个人博客</span>
+					</h1>
+
+					<div class="relative inline-block">
+						<p class="text-[clamp(1.2rem,3vw,1.8rem)] font-cyber text-white overflow-hidden border-r-4 border-cyber-purple whitespace-nowrap mb-8 mx-auto animate-typing"
+							style="width: fit-content;">
+							数字媒体技术 | 项目管理 | 应用开发
+						</p>
+					</div>
+
+					<div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
+						<div
+							class="flex items-center gap-3 bg-cyber-dark/60 backdrop-blur-sm p-3 rounded-lg border border-cyber-purple/30 hover:border-cyber-purple transition-all duration-300">
+							<i class="fa-solid fa-user text-cyber-pink"></i>
+							<span>男 | 22岁 | 四川德阳</span>
+						</div>
+						<div
+							class="flex items-center gap-3 bg-cyber-dark/60 backdrop-blur-sm p-3 rounded-lg border border-cyber-blue/30 hover:border-cyber-blue transition-all duration-300">
+							<i class="fa-solid fa-phone text-cyber-blue"></i>
+							<span>15281460578</span>
+						</div>
+						<div
+							class="flex items-center gap-3 bg-cyber-dark/60 backdrop-blur-sm p-3 rounded-lg border border-cyber-green/30 hover:border-cyber-green transition-all duration-300">
+							<i class="fa-solid fa-envelope text-cyber-green"></i>
+							<span>1114024916@qq.com</span>
+						</div>
+					</div>
+
+					<a href="#about"
+						class="inline-block px-8 py-3 bg-gradient-to-r from-cyber-purple to-cyber-blue rounded-md font-cyber text-white hover:shadow-lg hover:shadow-cyber-purple/30 transition-all duration-300 transform hover:-translate-y-1">
+						了解更多 <i class="fa-solid fa-arrow-down ml-2 animate-bounce"></i>
+					</a>
+				</div>
+			</div>
+
+			<!-- 向下滚动指示 -->
+			<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+				<i class="fa-solid fa-angle-down text-2xl"></i>
+			</div>
+		</section>
+
+		<!-- 关于我区域 -->
+		<section id="about" class="py-20 bg-cyber-dark relative overflow-hidden">
+			<div class="absolute inset-0 bg-cyber-grid opacity-50"></div>
+			<div class="container mx-auto px-4 relative z-10">
+				<div class="max-w-6xl mx-auto">
+					<h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-cyber font-bold mb-12 text-center relative">
+						<span class="inline-block relative">
+							关于我
+							<span
+								class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyber-pink via-cyber-blue to-cyber-green rounded-full"></span>
+						</span>
+					</h2>
+
+					<div class="grid md:grid-cols-2 gap-12 items-center">
+						<div class="relative">
+							<div
+								class="absolute -top-4 -left-4 w-full h-full border-2 border-cyber-pink rounded-lg opacity-50">
+							</div>
+							<div
+								class="absolute -bottom-4 -right-4 w-full h-full border-2 border-cyber-blue rounded-lg opacity-50">
+							</div>
+							<img src="https://picsum.photos/600/800" alt="张昱成照片"
+								class="w-full h-auto rounded-lg object-cover border-4 border-cyber-dark relative z-10 shadow-xl shadow-cyber-purple/20">
+						</div>
+
+						<div class="space-y-6">
+							<h3 class="text-2xl font-cyber text-cyber-blue mb-4">个人优势</h3>
+							<ul class="space-y-3">
+								<li class="flex items-start gap-3">
+									<i class="fa-solid fa-star text-cyber-pink mt-1"></i>
+									<span>丰富的团队管理经验和组织能力，能够独立策划培训内容以及项目活动的落地。</span>
+								</li>
+								<li class="flex items-start gap-3">
+									<i class="fa-solid fa-star text-cyber-pink mt-1"></i>
+									<span>具备极强的学习能力，能够快速适应新环境和新技术，并且能够积极参与团队合作，共同完成项目任务。</span>
+								</li>
+							</ul>
+
+							<h3 class="text-2xl font-cyber text-cyber-pink mt-8 mb-4">自我评价</h3>
+							<p class="text-gray-300 leading-relaxed">
+								本人有丰富的销售经验、出色的管理能力、谈判力和成交能力，掌握市场运营和营销的方法和策略，熟悉并善于运用地推和线上推广营销，注重团队的协作，为集体利益取得进步和结果而不懈奋斗，同时希望结合跨领域经验，为行业带来独特视角。
+							</p>
+
+							<div class="mt-10 flex flex-wrap gap-4">
+								<a href="#skills"
+									class="px-6 py-2 bg-cyber-blue/20 hover:bg-cyber-blue/30 border border-cyber-blue rounded-md transition-all duration-300">
+									查看我的技能 <i class="fa-solid fa-code ml-2"></i>
+								</a>
+								<a href="#projects"
+									class="px-6 py-2 bg-cyber-pink/20 hover:bg-cyber-pink/30 border border-cyber-pink rounded-md transition-all duration-300">
+									浏览项目经历 <i class="fa-solid fa-briefcase ml-2"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 技能区域 -->
+		<section id="skills" class="py-20 bg-gradient-to-b from-cyber-darker to-cyber-dark relative overflow-hidden">
+			<div class="absolute inset-0 bg-cyber-grid opacity-30"></div>
+			<div class="container mx-auto px-4 relative z-10">
+				<div class="max-w-6xl mx-auto">
+					<h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-cyber font-bold mb-12 text-center relative">
+						<span class="inline-block relative">
+							专业技能
+							<span
+								class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyber-green via-cyber-purple to-cyber-accent rounded-full"></span>
+						</span>
+					</h2>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+						<!-- 技能卡片1 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-blue/30 hover:border-cyber-blue transition-all duration-300 group">
+							<div
+								class="w-16 h-16 rounded-full bg-cyber-blue/20 flex items-center justify-center mb-6 group-hover:bg-cyber-blue/30 transition-all duration-300">
+								<i class="fa-solid fa-database text-2xl text-cyber-blue"></i>
+							</div>
+							<h3
+								class="text-xl font-cyber mb-4 text-white group-hover:text-cyber-blue transition-colors duration-300">
+								数据库与数据处理</h3>
+							<ul class="space-y-3">
+								<li class="flex items-center justify-between">
+									<span>MySQL</span>
+									<div class="w-1/3 h-2 bg-gray-700 rounded-full overflow-hidden">
+										<div class="h-full bg-cyber-blue rounded-full" style="width: 90%"></div>
+									</div>
+								</li>
+								<li class="flex items-center justify-between">
+									<span>数据仓库</span>
+									<div class="w-1/3 h-2 bg-gray-700 rounded-full overflow-hidden">
+										<div class="h-full bg-cyber-blue rounded-full" style="width: 80%"></div>
+									</div>
+								</li>
+								<li class="flex items-center justify-between">
+									<span>商业智能</span>
+									<div class="w-1/3 h-2 bg-gray-700 rounded-full overflow-hidden">
+										<div class="h-full bg-cyber-blue rounded-full" style="width: 75%"></div>
+									</div>
+								</li>
+							</ul>
+							<p class="mt-4 text-gray-400">精通Mysql数据库语言，用于用户数据储存、内容管理、数据仓库、商业智能。</p>
+						</div>
+
+						<!-- 技能卡片2 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-pink/30 hover:border-cyber-pink transition-all duration-300 group">
+							<div
+								class="w-16 h-16 rounded-full bg-cyber-pink/20 flex items-center justify-center mb-6 group-hover:bg-cyber-pink/30 transition-all duration-300">
+								<i class="fa-solid fa-robot text-2xl text-cyber-pink"></i>
+							</div>
+							<h3
+								class="text-xl font-cyber mb-4 text-white group-hover:text-cyber-pink transition-colors duration-300">
+								AI工具与办公应用</h3>
+							<ul class="space-y-3">
+								<li class="flex items-center">
+									<i class="fa-solid fa-check text-cyber-pink mr-2"></i>
+									<span>Excel、Word、PPT、飞书</span>
+								</li>
+								<li class="flex items-center">
+									<i class="fa-solid fa-check text-cyber-pink mr-2"></i>
+									<span>通义万相、Manus、DeepSeek</span>
+								</li>
+								<li class="flex items-center">
+									<i class="fa-solid fa-check text-cyber-pink mr-2"></i>
+									<span>coze</span>
+								</li>
+							</ul>
+							<p class="mt-4 text-gray-400">熟练掌握多个AI工具以及办公用具的结合应用，提高工作效率和质量。</p>
+						</div>
+
+						<!-- 技能卡片3 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-green/30 hover:border-cyber-green transition-all duration-300 group">
+							<div
+								class="w-16 h-16 rounded-full bg-cyber-green/20 flex items-center justify-center mb-6 group-hover:bg-cyber-green/30 transition-all duration-300">
+								<i class="fa-solid fa-code text-2xl text-cyber-green"></i>
+							</div>
+							<h3
+								class="text-xl font-cyber mb-4 text-white group-hover:text-cyber-green transition-colors duration-300">
+								技术开发</h3>
+							<ul class="space-y-3">
+								<li class="flex items-start gap-3">
+									<i class="fa-solid fa-circle text-cyber-green text-xs mt-1.5"></i>
+									<span>AI智能客服的研发与大模型的训练</span>
+								</li>
+								<li class="flex items-start gap-3">
+									<i class="fa-solid fa-circle text-cyber-green text-xs mt-1.5"></i>
+									<span>矩阵视频的搭建与培训</span>
+								</li>
+								<li class="flex items-start gap-3">
+									<i class="fa-solid fa-circle text-cyber-green text-xs mt-1.5"></i>
+									<span>模块工具开发与系统集成</span>
+								</li>
+							</ul>
+							<p class="mt-4 text-gray-400">能够独立完成模块工具开发，包括AI智能客服的研发与大模型的训练，以及矩阵视频的搭建与培训。</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 教育背景区域 -->
+		<section id="education" class="py-20 bg-cyber-dark relative overflow-hidden">
+			<div class="absolute inset-0 bg-cyber-grid opacity-30"></div>
+			<div class="container mx-auto px-4 relative z-10">
+				<div class="max-w-6xl mx-auto">
+					<h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-cyber font-bold mb-12 text-center relative">
+						<span class="inline-block relative">
+							教育背景
+							<span
+								class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyber-pink via-cyber-accent to-cyber-blue rounded-full"></span>
+						</span>
+					</h2>
+
+					<div class="relative">
+						<!-- 时间线 -->
+						<div
+							class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyber-pink via-cyber-blue to-cyber-green transform md:-translate-x-1/2">
+						</div>
+
+						<!-- 教育经历1 -->
+						<div class="mb-12 relative">
+							<div class="md:w-1/2 md:pr-12 md:text-right">
+								<div
+									class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-pink/30 hover:border-cyber-pink transition-all duration-300 shadow-lg shadow-cyber-pink/10 transform hover:-translate-y-1">
+									<span
+										class="inline-block px-3 py-1 bg-cyber-pink/20 text-cyber-pink rounded-md text-sm font-cyber mb-3">2022年
+										- 至今</span>
+									<h3 class="text-xl font-cyber mb-2 text-white">贵州大学明德学院</h3>
+									<p class="text-gray-300 mb-3">本科 | 数字媒体技术</p>
+									<p class="text-gray-400">担任大学班长，积极完成老师布置任务工作、处理班级各项事务和提交资料表格。</p>
+								</div>
+							</div>
+							<div
+								class="absolute left-0 md:left-1/2 top-1/2 w-6 h-6 bg-cyber-pink rounded-full border-4 border-cyber-dark transform -translate-x-1/2 -translate-y-1/2 z-10">
+							</div>
+						</div>
+
+						<!-- 教育经历2 -->
+						<div class="mb-12 relative">
+							<div class="md:w-1/2 md:ml-auto md:pl-12">
+								<div
+									class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-blue/30 hover:border-cyber-blue transition-all duration-300 shadow-lg shadow-cyber-blue/10 transform hover:-translate-y-1">
+									<span
+										class="inline-block px-3 py-1 bg-cyber-blue/20 text-cyber-blue rounded-md text-sm font-cyber mb-3">2022年9月
+										- 12月</span>
+									<h3 class="text-xl font-cyber mb-2 text-white">公寓楼层负责人</h3>
+									<p class="text-gray-400">组织300+人的核算检测数据统计以及汇报，保证每次数据的精准上报。</p>
+								</div>
+							</div>
+							<div
+								class="absolute left-0 md:left-1/2 top-1/2 w-6 h-6 bg-cyber-blue rounded-full border-4 border-cyber-dark transform -translate-x-1/2 -translate-y-1/2 z-10">
+							</div>
+						</div>
+
+						<!-- 教育经历3 -->
+						<div class="relative">
+							<div class="md:w-1/2 md:pr-12 md:text-right">
+								<div
+									class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-green/30 hover:border-cyber-green transition-all duration-300 shadow-lg shadow-cyber-green/10 transform hover:-translate-y-1">
+									<span
+										class="inline-block px-3 py-1 bg-cyber-green/20 text-cyber-green rounded-md text-sm font-cyber mb-3">2023年
+										- 至今</span>
+									<h3 class="text-xl font-cyber mb-2 text-white">公寓楼长</h3>
+									<p class="text-gray-400">管理近1000+学生的公寓卫生问题。</p>
+								</div>
+							</div>
+							<div
+								class="absolute left-0 md:left-1/2 top-1/2 w-6 h-6 bg-cyber-green rounded-full border-4 border-cyber-dark transform -translate-x-1/2 -translate-y-1/2 z-10">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 项目经历区域 -->
+		<section id="projects" class="py-20 bg-gradient-to-b from-cyber-darker to-cyber-dark relative overflow-hidden">
+			<div class="absolute inset-0 bg-cyber-grid opacity-20"></div>
+			<div class="container mx-auto px-4 relative z-10">
+				<div class="max-w-6xl mx-auto">
+					<h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-cyber font-bold mb-12 text-center relative">
+						<span class="inline-block relative">
+							项目经历
+							<span
+								class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyber-accent via-cyber-purple to-cyber-blue rounded-full"></span>
+						</span>
+					</h2>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+						<!-- 项目卡片1 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg overflow-hidden border border-cyber-accent/30 hover:border-cyber-accent transition-all duration-300 group">
+							<div class="h-48 overflow-hidden relative">
+								<img src="https://picsum.photos/600/400?random=1" alt="分之道暑期训练营"
+									class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+								<div class="absolute inset-0 bg-gradient-to-t from-cyber-darker to-transparent"></div>
+							</div>
+							<div class="p-6">
+								<h3
+									class="text-xl font-cyber mb-3 text-white group-hover:text-cyber-accent transition-colors duration-300">
+									分之道暑期训练营 - 区域校长</h3>
+								<p class="text-gray-300 mb-4">负责团队的组建、做项目计划、协调团队工作、监督团队任务进程。</p>
+								<div class="flex items-center text-cyber-accent mb-4">
+									<i class="fa-solid fa-trophy mr-2"></i>
+									<span>2024年7月于遵义的桐梓运营中心，带领10人团队在45天时间创造10万+业绩。</span>
+								</div>
+								<div class="flex flex-wrap gap-2 mb-4">
+									<span
+										class="px-3 py-1 bg-cyber-accent/20 text-cyber-accent rounded-full text-xs">团队管理</span>
+									<span
+										class="px-3 py-1 bg-cyber-accent/20 text-cyber-accent rounded-full text-xs">项目规划</span>
+									<span
+										class="px-3 py-1 bg-cyber-accent/20 text-cyber-accent rounded-full text-xs">业绩提升</span>
+								</div>
+								<button
+									class="project-detail-btn px-4 py-2 bg-cyber-accent/20 hover:bg-cyber-accent/30 text-cyber-accent rounded-md transition-all duration-300 flex items-center"
+									data-project="project1">
+									查看详情 <i class="fa-solid fa-arrow-right ml-2"></i>
+								</button>
+							</div>
+						</div>
+
+						<!-- 项目卡片2 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg overflow-hidden border border-cyber-purple/30 hover:border-cyber-purple transition-all duration-300 group">
+							<div class="h-48 overflow-hidden relative">
+								<img src="https://picsum.photos/600/400?random=2" alt="学慧寒期锻造营"
+									class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+								<div class="absolute inset-0 bg-gradient-to-t from-cyber-darker to-transparent"></div>
+							</div>
+							<div class="p-6">
+								<h3
+									class="text-xl font-cyber mb-3 text-white group-hover:text-cyber-purple transition-colors duration-300">
+									学慧寒期锻造营 - 市场运营总监</h3>
+								<p class="text-gray-300 mb-4">组织并顺利完成了4场技能培训：产品力培训、教学能力培训、攻单话术培训、领导力培训；参与主要的面试与招聘工作。</p>
+								<div class="flex items-center text-cyber-purple mb-4">
+									<i class="fa-solid fa-trophy mr-2"></i>
+									<span>2025年1月于毕节的金沙早智道ai智习室，带领10人团队在30天时间内创造8万+业绩。</span>
+								</div>
+								<div class="flex flex-wrap gap-2 mb-4">
+									<span
+										class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-xs">市场运营</span>
+									<span
+										class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-xs">人员培训</span>
+									<span
+										class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-xs">招聘面试</span>
+								</div>
+								<button
+									class="project-detail-btn px-4 py-2 bg-cyber-purple/20 hover:bg-cyber-purple/30 text-cyber-purple rounded-md transition-all duration-300 flex items-center"
+									data-project="project2">
+									查看详情 <i class="fa-solid fa-arrow-right ml-2"></i>
+								</button>
+							</div>
+						</div>
+
+						<!-- 项目卡片3 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg overflow-hidden border border-cyber-blue/30 hover:border-cyber-blue transition-all duration-300 group">
+							<div class="h-48 overflow-hidden relative">
+								<img src="https://picsum.photos/600/400?random=3" alt="快回家大学城直达专列"
+									class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+								<div class="absolute inset-0 bg-gradient-to-t from-cyber-darker to-transparent"></div>
+							</div>
+							<div class="p-6">
+								<h3
+									class="text-xl font-cyber mb-3 text-white group-hover:text-cyber-blue transition-colors duration-300">
+									快回家大学城直达专列 - 校园总负责人</h3>
+								<p class="text-gray-300 mb-4">担任贵阳信息科技总负责人，负责市场宣传，组织40+宣传人员进行培训以及市场宣传。</p>
+								<div class="flex items-center text-cyber-blue mb-4">
+									<i class="fa-solid fa-trophy mr-2"></i>
+									<span>7天宣传时间获取1000+有效用户。</span>
+								</div>
+								<div class="flex flex-wrap gap-2 mb-4">
+									<span
+										class="px-3 py-1 bg-cyber-blue/20 text-cyber-blue rounded-full text-xs">市场宣传</span>
+									<span
+										class="px-3 py-1 bg-cyber-blue/20 text-cyber-blue rounded-full text-xs">团队培训</span>
+									<span
+										class="px-3 py-1 bg-cyber-blue/20 text-cyber-blue rounded-full text-xs">用户增长</span>
+								</div>
+								<button
+									class="project-detail-btn px-4 py-2 bg-cyber-blue/20 hover:bg-cyber-blue/30 text-cyber-blue rounded-md transition-all duration-300 flex items-center"
+									data-project="project3">
+									查看详情 <i class="fa-solid fa-arrow-right ml-2"></i>
+								</button>
+							</div>
+						</div>
+
+						<!-- 项目卡片4 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg overflow-hidden border border-cyber-green/30 hover:border-cyber-green transition-all duration-300 group">
+							<div class="h-48 overflow-hidden relative">
+								<img src="https://picsum.photos/600/400?random=4" alt="大学城驾校联盟抽奖活动"
+									class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+								<div class="absolute inset-0 bg-gradient-to-t from-cyber-darker to-transparent"></div>
+							</div>
+							<div class="p-6">
+								<h3
+									class="text-xl font-cyber mb-3 text-white group-hover:text-cyber-green transition-colors duration-300">
+									大学城驾校联盟千人免费抽奖活动 - 项目策划和线上市场营销</h3>
+								<p class="text-gray-300 mb-4">单独完成整个活动的策划、线上市场策划与宣传、组织团队对整个项目的落地、培训团队制作矩阵账号线上宣传。</p>
+								<div class="flex items-center text-cyber-green mb-4">
+									<i class="fa-solid fa-trophy mr-2"></i>
+									<span>30天活动项目总曝光量破千万。</span>
+								</div>
+								<div class="flex flex-wrap gap-2 mb-4">
+									<span
+										class="px-3 py-1 bg-cyber-green/20 text-cyber-green rounded-full text-xs">项目策划</span>
+									<span
+										class="px-3 py-1 bg-cyber-green/20 text-cyber-green rounded-full text-xs">线上营销</span>
+									<span
+										class="px-3 py-1 bg-cyber-green/20 text-cyber-green rounded-full text-xs">矩阵运营</span>
+								</div>
+								<button
+									class="project-detail-btn px-4 py-2 bg-cyber-green/20 hover:bg-cyber-green/30 text-cyber-green rounded-md transition-all duration-300 flex items-center"
+									data-project="project4">
+									查看详情 <i class="fa-solid fa-arrow-right ml-2"></i>
+								</button>
+							</div>
+						</div>
+
+						<!-- 项目卡片5 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg overflow-hidden border border-cyber-pink/30 hover:border-cyber-pink transition-all duration-300 group col-span-1 md:col-span-2">
+							<div class="h-48 overflow-hidden relative">
+								<img src="https://picsum.photos/600/400?random=5" alt="速到家校园外卖"
+									class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+								<div class="absolute inset-0 bg-gradient-to-t from-cyber-darker to-transparent"></div>
+							</div>
+							<div class="p-6">
+								<h3
+									class="text-xl font-cyber mb-3 text-white group-hover:text-cyber-pink transition-colors duration-300">
+									速到家校园外卖 - 总发起人</h3>
+								<p class="text-gray-300 mb-4">从0到1地单独策划并实施整个项目的落地、自主研发外卖平台小程序。</p>
+								<div class="flex items-center text-cyber-pink mb-4">
+									<i class="fa-solid fa-trophy mr-2"></i>
+									<span>与商家谈判加盟政策并收取加盟费、引流商家加盟平台达10+、总平台用户量达7000+。</span>
+								</div>
+								<div class="flex flex-wrap gap-2 mb-4">
+									<span
+										class="px-3 py-1 bg-cyber-pink/20 text-cyber-pink rounded-full text-xs">创业项目</span>
+									<span
+										class="px-3 py-1 bg-cyber-pink/20 text-cyber-pink rounded-full text-xs">平台开发</span>
+									<span
+										class="px-3 py-1 bg-cyber-pink/20 text-cyber-pink rounded-full text-xs">商务谈判</span>
+								</div>
+								<button
+									class="project-detail-btn px-4 py-2 bg-cyber-pink/20 hover:bg-cyber-pink/30 text-cyber-pink rounded-md transition-all duration-300 flex items-center"
+									data-project="project5">
+									查看详情 <i class="fa-solid fa-arrow-right ml-2"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 荣誉奖项区域 -->
+		<section id="awards" class="py-20 bg-cyber-dark relative overflow-hidden">
+			<div class="absolute inset-0 bg-cyber-grid opacity-20"></div>
+			<div class="container mx-auto px-4 relative z-10">
+				<div class="max-w-6xl mx-auto">
+					<h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-cyber font-bold mb-12 text-center relative">
+						<span class="inline-block relative">
+							荣誉奖项
+							<span
+								class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyber-blue via-cyber-green to-cyber-pink rounded-full"></span>
+						</span>
+					</h2>
+
+					<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+						<!-- 奖项1 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-blue/30 hover:border-cyber-blue transition-all duration-300 group">
+							<div class="flex items-center mb-4">
+								<div
+									class="w-12 h-12 rounded-full bg-cyber-blue/20 flex items-center justify-center mr-4 group-hover:bg-cyber-blue/30 transition-all duration-300">
+									<i class="fa-solid fa-award text-xl text-cyber-blue"></i>
+								</div>
+								<div>
+									<h3
+										class="text-lg font-cyber text-white group-hover:text-cyber-blue transition-colors duration-300">
+										四川省级英语竞赛三等奖</h3>
+									<span class="text-sm text-gray-400">2019年</span>
+								</div>
+							</div>
+							<p class="text-gray-300">在四川省组织的英语竞赛中获得三等奖，展现了良好的英语水平和学习能力。</p>
+						</div>
+
+						<!-- 奖项2 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-green/30 hover:border-cyber-green transition-all duration-300 group">
+							<div class="flex items-center mb-4">
+								<div
+									class="w-12 h-12 rounded-full bg-cyber-green/20 flex items-center justify-center mr-4 group-hover:bg-cyber-green/30 transition-all duration-300">
+									<i class="fa-solid fa-medal text-xl text-cyber-green"></i>
+								</div>
+								<div>
+									<h3
+										class="text-lg font-cyber text-white group-hover:text-cyber-green transition-colors duration-300">
+										救火校级通报表扬</h3>
+									<span class="text-sm text-gray-400">2023年</span>
+								</div>
+							</div>
+							<p class="text-gray-300">在校园火灾事件中表现突出，积极参与救火行动，受到学校的通报表扬。</p>
+						</div>
+
+						<!-- 奖项3 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-pink/30 hover:border-cyber-pink transition-all duration-300 group">
+							<div class="flex items-center mb-4">
+								<div
+									class="w-12 h-12 rounded-full bg-cyber-pink/20 flex items-center justify-center mr-4 group-hover:bg-cyber-pink/30 transition-all duration-300">
+									<i class="fa-solid fa-trophy text-xl text-cyber-pink"></i>
+								</div>
+								<div>
+									<h3
+										class="text-lg font-cyber text-white group-hover:text-cyber-pink transition-colors duration-300">
+										校园心理情景剧校级一等奖</h3>
+									<span class="text-sm text-gray-400">2023年</span>
+								</div>
+							</div>
+							<p class="text-gray-300">参与校园心理情景剧表演，带领团队获得校级一等奖，展现了出色的组织和表演能力。</p>
+						</div>
+
+						<!-- 奖项4 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-accent/30 hover:border-cyber-accent transition-all duration-300 group">
+							<div class="flex items-center mb-4">
+								<div
+									class="w-12 h-12 rounded-full bg-cyber-accent/20 flex items-center justify-center mr-4 group-hover:bg-cyber-accent/30 transition-all duration-300">
+									<i class="fa-solid fa-certificate text-xl text-cyber-accent"></i>
+								</div>
+								<div>
+									<h3
+										class="text-lg font-cyber text-white group-hover:text-cyber-accent transition-colors duration-300">
+										三等奖学金</h3>
+									<span class="text-sm text-gray-400">2023年</span>
+								</div>
+							</div>
+							<p class="text-gray-300">因学业成绩优秀，综合表现突出，获得学校颁发的三等奖学金。</p>
+						</div>
+
+						<!-- 奖项5 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-purple/30 hover:border-cyber-purple transition-all duration-300 group">
+							<div class="flex items-center mb-4">
+								<div
+									class="w-12 h-12 rounded-full bg-cyber-purple/20 flex items-center justify-center mr-4 group-hover:bg-cyber-purple/30 transition-all duration-300">
+									<i class="fa-solid fa-book text-xl text-cyber-purple"></i>
+								</div>
+								<div>
+									<h3
+										class="text-lg font-cyber text-white group-hover:text-cyber-purple transition-colors duration-300">
+										英语四级证书</h3>
+									<span class="text-sm text-gray-400">2024年</span>
+								</div>
+							</div>
+							<p class="text-gray-300">顺利通过全国大学英语四级考试，取得英语四级证书，证明具备良好的英语能力。</p>
+						</div>
+
+						<!-- 奖项6 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-blue/30 hover:border-cyber-blue transition-all duration-300 group">
+							<div class="flex items-center mb-4">
+								<div
+									class="w-12 h-12 rounded-full bg-cyber-blue/20 flex items-center justify-center mr-4 group-hover:bg-cyber-blue/30 transition-all duration-300">
+									<i class="fa-solid fa-lightbulb text-xl text-cyber-blue"></i>
+								</div>
+								<div>
+									<h3
+										class="text-lg font-cyber text-white group-hover:text-cyber-blue transition-colors duration-300">
+										SYB创业合格证书</h3>
+									<span class="text-sm text-gray-400">2024年</span>
+								</div>
+							</div>
+							<p class="text-gray-300">参加SYB创业培训课程并顺利通过考核，获得创业合格证书，掌握了创业的基本知识和技能。</p>
+						</div>
+
+						<!-- 奖项7 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-green/30 hover:border-cyber-green transition-all duration-300 group col-span-1 sm:col-span-2">
+							<div class="flex items-center mb-4">
+								<div
+									class="w-12 h-12 rounded-full bg-cyber-green/20 flex items-center justify-center mr-4 group-hover:bg-cyber-green/30 transition-all duration-300">
+									<i class="fa-solid fa-users text-xl text-cyber-green"></i>
+								</div>
+								<div>
+									<h3
+										class="text-lg font-cyber text-white group-hover:text-cyber-green transition-colors duration-300">
+										超级校长训练营二等奖</h3>
+									<span class="text-sm text-gray-400">2024年</span>
+								</div>
+							</div>
+							<p class="text-gray-300">参加超级校长训练营，通过团队协作和个人能力展示，带领团队获得二等奖，提升了项目管理和领导能力。</p>
+						</div>
+
+						<!-- 奖项8 -->
+						<div
+							class="bg-cyber-darker/60 backdrop-blur-md rounded-lg p-6 border border-cyber-pink/30 hover:border-cyber-pink transition-all duration-300 group col-span-1 sm:col-span-2">
+							<div class="flex items-center mb-4">
+								<div
+									class="w-12 h-12 rounded-full bg-cyber-pink/20 flex items-center justify-center mr-4 group-hover:bg-cyber-pink/30 transition-all duration-300">
+									<i class="fa-solid fa-user-tie text-xl text-cyber-pink"></i>
+								</div>
+								<div>
+									<h3
+										class="text-lg font-cyber text-white group-hover:text-cyber-pink transition-colors duration-300">
+										优秀学生管干部</h3>
+									<span class="text-sm text-gray-400">2024年</span>
+								</div>
+							</div>
+							<p class="text-gray-300">因在学生管理工作中表现出色，认真负责，为学校和学生做出贡献，被评为优秀学生管干部。</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 页脚 -->
+		<footer class="py-10 bg-cyber-darker relative overflow-hidden">
+			<div class="absolute inset-0 bg-cyber-grid opacity-10"></div>
+			<div class="container mx-auto px-4 relative z-10">
+				<div class="max-w-6xl mx-auto text-center">
+					<div class="mb-8">
+						<h3 class="text-2xl font-cyber text-white mb-4">联系我</h3>
+						<div class="flex justify-center space-x-6 mb-6">
+							<a href="#"
+								class="w-12 h-12 rounded-full bg-cyber-purple/20 flex items-center justify-center hover:bg-cyber-purple/30 transition-all duration-300 text-cyber-purple">
+								<i class="fa-brands fa-weixin text-xl"></i>
+							</a>
+							<a href="#"
+								class="w-12 h-12 rounded-full bg-cyber-blue/20 flex items-center justify-center hover:bg-cyber-blue/30 transition-all duration-300 text-cyber-blue">
+								<i class="fa-brands fa-qq text-xl"></i>
+							</a>
+							<a href="#"
+								class="w-12 h-12 rounded-full bg-cyber-green/20 flex items-center justify-center hover:bg-cyber-green/30 transition-all duration-300 text-cyber-green">
+								<i class="fa-brands fa-github text-xl"></i>
+							</a>
+							<a href="#"
+								class="w-12 h-12 rounded-full bg-cyber-accent/20 flex items-center justify-center hover:bg-cyber-accent/30 transition-all duration-300 text-cyber-accent">
+								<i class="fa-brands fa-linkedin text-xl"></i>
+							</a>
+						</div>
+						<p class="text-gray-400">随时欢迎联系我，一起探讨合作机会或交流学习经验</p>
+					</div>
+
+					<div class="border-t border-gray-800 pt-8 mt-8">
+						<p class="text-gray-500">© 2025 张昱成个人博客 | 赛博朋克风格设计</p>
+						<p class="text-gray-600 text-sm mt-2">本网站仅供展示个人信息和项目经历，所有内容真实有效</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<!-- 项目详情模态框 -->
+		<div id="project-modal"
+			class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+			<div
+				class="bg-cyber-dark border border-cyber-blue/30 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-transform duration-300 scale-95">
+				<div class="p-6">
+					<div class="flex justify-between items-center mb-6">
+						<h3 id="modal-title" class="text-2xl font-cyber text-white"></h3>
+						<button id="close-modal" class="text-gray-400 hover:text-white transition-colors duration-300">
+							<i class="fa-solid fa-times text-xl"></i>
+						</button>
+					</div>
+					<div id="modal-content" class="space-y-6 text-gray-300"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- JavaScript -->
+		<script>
+			// 项目详情数据
+			const projectDetails = {
+				project1: {
+					title: "分之道暑期训练营 - 区域校长",
+					content: `
+          <div class="space-y-4">
+            <div class="h-64 overflow-hidden rounded-lg mb-4">
+              <img src="https://picsum.photos/800/400?random=1" alt="分之道暑期训练营" class="w-full h-full object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-accent mb-2">项目职责</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-accent mt-1"></i>
+                    <span>负责团队的组建与管理，选拔和培训10名核心成员</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-accent mt-1"></i>
+                    <span>制定详细的项目计划和营销策略，确保项目有序推进</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-accent mt-1"></i>
+                    <span>协调团队工作，解决项目中出现的各种问题和挑战</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-accent mt-1"></i>
+                    <span>监督团队任务进程，确保各项指标按时完成</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-accent mb-2">项目成果</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-accent mt-1"></i>
+                    <span>在45天时间内带领团队创造10万+业绩</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-accent mt-1"></i>
+                    <span>学员满意度达到95%以上，树立了良好的品牌形象</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-accent mt-1"></i>
+                    <span>培养了一批优秀的团队成员，为公司储备了人才</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-accent mb-2">项目挑战与解决方案</h4>
+              <p>在项目初期，面临市场竞争激烈、招生困难等问题。通过深入分析市场需求，制定差异化的营销策略，加强与学校、社区的合作，同时优化教学服务，提高教学质量，最终成功克服了困难，实现了项目目标。</p>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-accent mb-2">个人收获</h4>
+              <p>通过这个项目，我提升了团队管理和项目策划能力，学会了如何在竞争激烈的市场中寻找机会，同时也增强了自己的沟通协调和问题解决能力。</p>
+            </div>
+          </div>
+        `
+				},
+				project2: {
+					title: "学慧寒期锻造营 - 市场运营总监",
+					content: `
+          <div class="space-y-4">
+            <div class="h-64 overflow-hidden rounded-lg mb-4">
+              <img src="https://picsum.photos/800/400?random=2" alt="学慧寒期锻造营" class="w-full h-full object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-purple mb-2">项目职责</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-purple mt-1"></i>
+                    <span>负责市场运营和营销策划工作，制定并执行市场推广方案</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-purple mt-1"></i>
+                    <span>组织并顺利完成了4场技能培训，提升团队整体能力</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-purple mt-1"></i>
+                    <span>参与主要的面试与招聘工作，选拔优秀的团队成员</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-purple mt-1"></i>
+                    <span>带领团队制定工作计划，共同完成销售目标</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-purple mb-2">项目成果</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-purple mt-1"></i>
+                    <span>在30天时间内带领团队创造8万+业绩</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-purple mt-1"></i>
+                    <span>通过培训，团队成员的业务能力提升了30%以上</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-purple mt-1"></i>
+                    <span>成功招聘了一批优秀的人才，为团队注入了新的活力</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-purple mb-2">项目挑战与解决方案</h4>
+              <p>项目期间，面临时间紧、任务重、团队成员经验不足等问题。我通过合理安排时间，优化培训内容，加强团队协作，同时给予成员充分的指导和支持，最终确保了项目的顺利进行和目标的实现。</p>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-purple mb-2">个人收获</h4>
+              <p>这个项目让我深入了解了市场运营和营销策划的各个环节，提升了自己的组织能力和团队管理能力。同时，通过与不同背景的人合作，也增强了自己的沟通能力和人际交往能力。</p>
+            </div>
+          </div>
+        `
+				},
+				project3: {
+					title: "快回家大学城直达专列 - 校园总负责人",
+					content: `
+          <div class="space-y-4">
+            <div class="h-64 overflow-hidden rounded-lg mb-4">
+              <img src="https://picsum.photos/800/400?random=3" alt="快回家大学城直达专列" class="w-full h-full object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-blue mb-2">项目职责</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-blue mt-1"></i>
+                    <span>担任贵阳信息科技总负责人，全面负责项目的实施</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-blue mt-1"></i>
+                    <span>制定市场宣传策略和计划，提高项目的知名度和影响力</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-blue mt-1"></i>
+                    <span>组织40+宣传人员进行培训，提升团队的宣传能力</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-blue mt-1"></i>
+                    <span>监督市场宣传工作的进展，及时调整策略和方法</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-blue mb-2">项目成果</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-blue mt-1"></i>
+                    <span>7天宣传时间获取1000+有效用户</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-blue mt-1"></i>
+                    <span>项目满意度达到90%以上，得到了学校和学生的广泛认可</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-blue mt-1"></i>
+                    <span>为公司创造了良好的经济效益和社会效益</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-blue mb-2">项目挑战与解决方案</h4>
+              <p>宣传期间，面临竞争对手多、宣传渠道有限、学生参与度不高等问题。我通过分析竞争对手的优势和劣势，制定差异化的宣传策略，拓展多种宣传渠道，同时设计了一系列吸引人的活动，提高了学生的参与度和项目的知名度。</p>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-blue mb-2">个人收获</h4>
+              <p>这个项目让我锻炼了自己的组织能力和领导能力，学会了如何有效地管理和激励团队。同时，也提高了自己的市场分析和营销策划能力，为今后的工作打下了坚实的基础。</p>
+            </div>
+          </div>
+        `
+				},
+				project4: {
+					title: "大学城驾校联盟千人免费抽奖活动 - 项目策划和线上市场营销",
+					content: `
+          <div class="space-y-4">
+            <div class="h-64 overflow-hidden rounded-lg mb-4">
+              <img src="https://picsum.photos/800/400?random=4" alt="大学城驾校联盟抽奖活动" class="w-full h-full object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-green mb-2">项目职责</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-green mt-1"></i>
+                    <span>单独完成整个活动的策划和组织工作</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-green mt-1"></i>
+                    <span>制定线上市场策划与宣传方案，扩大活动影响力</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-green mt-1"></i>
+                    <span>组织团队对整个项目的落地实施，确保活动顺利进行</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-green mt-1"></i>
+                    <span>培训团队制作矩阵账号线上宣传，提高宣传效果</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-green mb-2">项目成果</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-green mt-1"></i>
+                    <span>30天活动项目总曝光量破千万</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-green mt-1"></i>
+                    <span>吸引了超过5000名学生参与活动，提高了驾校的知名度</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-green mt-1"></i>
+                    <span>活动期间，驾校报名人数增长了200%，取得了显著的经济效益</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-green mb-2">项目挑战与解决方案</h4>
+              <p>活动策划和执行过程中，面临预算有限、时间紧迫、线上宣传效果不佳等问题。我通过优化活动方案，合理分配预算，利用低成本的线上渠道进行宣传，同时加强与学生组织和社团的合作，最终成功克服了困难，实现了活动目标。</p>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-green mb-2">个人收获</h4>
+              <p>通过这个项目，我全面提升了自己的项目策划和组织能力，学会了如何在有限的资源下实现最大的效益。同时，也深入了解了线上市场营销的方法和技巧，积累了丰富的实战经验。</p>
+            </div>
+          </div>
+        `
+				},
+				project5: {
+					title: "速到家校园外卖 - 总发起人",
+					content: `
+          <div class="space-y-4">
+            <div class="h-64 overflow-hidden rounded-lg mb-4">
+              <img src="https://picsum.photos/800/400?random=5" alt="速到家校园外卖" class="w-full h-full object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-pink mb-2">项目职责</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-pink mt-1"></i>
+                    <span>从0到1地单独策划并实施整个项目的落地</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-pink mt-1"></i>
+                    <span>自主研发外卖平台小程序，确保平台的稳定运行</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-pink mt-1"></i>
+                    <span>与商家谈判加盟政策并收取加盟费，拓展商家资源</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyber-pink mt-1"></i>
+                    <span>负责平台的运营和推广，提高平台的用户量和知名度</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-lg font-cyber text-cyber-pink mb-2">项目成果</h4>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-pink mt-1"></i>
+                    <span>成功吸引10+商家加盟平台，丰富了平台的商品种类</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-pink mt-1"></i>
+                    <span>总平台用户量达7000+，日均订单量超过200单</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-trophy text-cyber-pink mt-1"></i>
+                    <span>项目获得了学校和学生的广泛认可，成为校园内知名的外卖平台</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-pink mb-2">项目挑战与解决方案</h4>
+              <p>项目初期，面临资金不足、技术难题、商家合作困难等问题。我通过自筹资金、自学编程知识解决技术问题，同时通过提供优惠政策和优质服务，成功吸引了商家加盟。在运营过程中，不断优化平台功能和服务流程，提高用户体验。</p>
+            </div>
+            <div>
+              <h4 class="text-lg font-cyber text-cyber-pink mb-2">个人收获</h4>
+              <p>这个项目让我体验了创业的全过程，锻炼了自己的创新能力和解决问题的能力。同时，也学会了如何进行商业谈判和资源整合，为今后的职业发展积累了宝贵的经验。</p>
+            </div>
+          </div>
+        `
+				}
+			};
+
+			// 导航栏滚动效果
+			window.addEventListener('scroll', function() {
+				const navbar = document.getElementById('navbar');
+				if (window.scrollY > 50) {
+					navbar.classList.add('bg-cyber-darker/95', 'shadow-lg');
+					navbar.classList.remove('bg-cyber-darker/80');
+				} else {
+					navbar.classList.remove('bg-cyber-darker/95', 'shadow-lg');
+					navbar.classList.add('bg-cyber-darker/80');
+				}
+			});
+
+			// 移动端菜单切换
+			document.getElementById('menu-toggle').addEventListener('click', function() {
+				const mobileMenu = document.getElementById('mobile-menu');
+				mobileMenu.classList.toggle('hidden');
+			});
+
+			// 平滑滚动
+			document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+				anchor.addEventListener('click', function(e) {
+					e.preventDefault();
+
+					const targetId = this.getAttribute('href');
+					const targetElement = document.querySelector(targetId);
+
+					if (targetElement) {
+						// 关闭移动菜单（如果打开）
+						document.getElementById('mobile-menu').classList.add('hidden');
+
+						window.scrollTo({
+							top: targetElement.offsetTop - 80,
+							behavior: 'smooth'
+						});
+					}
+				});
+			});
+
+			// 项目详情模态框
+			const modal = document.getElementById('project-modal');
+			const modalTitle = document.getElementById('modal-title');
+			const modalContent = document.getElementById('modal-content');
+			const closeModal = document.getElementById('close-modal');
+
+			// 打开模态框
+			document.querySelectorAll('.project-detail-btn').forEach(btn => {
+				btn.addEventListener('click', function() {
+					const projectId = this.getAttribute('data-project');
+					const projectData = projectDetails[projectId];
+
+					if (projectData) {
+						modalTitle.textContent = projectData.title;
+						modalContent.innerHTML = projectData.content;
+
+						// 显示模态框
+						modal.classList.remove('opacity-0', 'pointer-events-none');
+						modal.querySelector('div').classList.remove('scale-95');
+						modal.querySelector('div').classList.add('scale-100');
+
+						// 禁止背景滚动
+						document.body.style.overflow = 'hidden';
+					}
+				});
+			});
+
+			// 关闭模态框
+			closeModal.addEventListener('click', function() {
+				modal.classList.add('opacity-0', 'pointer-events-none');
+				modal.querySelector('div').classList.remove('scale-100');
+				modal.querySelector('div').classList.add('scale-95');
+
+				// 恢复背景滚动
+				document.body.style.overflow = '';
+			});
+
+			// 点击模态框外部关闭
+			modal.addEventListener('click', function(e) {
+				if (e.target === modal) {
+					closeModal.click();
+				}
+			});
+
+			// 键盘ESC关闭模态框
+			document.addEventListener('keydown', function(e) {
+				if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) {
+					closeModal.click();
+				}
+			});
+
+			// 元素进入视口时的动画
+			const animateOnScroll = () => {
+				const elements = document.querySelectorAll('.animate-on-scroll');
+
+				elements.forEach(element => {
+					const elementPosition = element.getBoundingClientRect().top;
+					const screenPosition = window.innerHeight / 1.2;
+
+					if (elementPosition < screenPosition) {
+						element.classList.add('animate-fadeIn');
+					}
+				});
+			};
+
+			// 初始检查和滚动监听
+			window.addEventListener('scroll', animateOnScroll);
+			window.addEventListener('load', animateOnScroll);
+		</script>
+	</body>
+</html>
